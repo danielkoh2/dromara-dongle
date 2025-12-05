@@ -1,4 +1,4 @@
-<p align="center" style="margin-bottom: -10px"><a href="https://dongle.go-pkg.com" target="_blank"><img src="https://dongle.go-pkg.com/logo.svg?v=1.1.x" width="15%" alt="dongle" /></a></p>
+<p align="center" style="margin-bottom: -10px"><a href="https://dongle.go-pkg.com/ja" target="_blank"><img src="https://dongle.go-pkg.com/logo.svg?v=1.1.x" width="15%" alt="dongle" /></a></p>
 
 [![Carbon Release](https://img.shields.io/github/release/dromara/dongle.svg)](https://github.com/dromara/dongle/releases)
 [![Go Test](https://github.com/dromara/dongle/actions/workflows/test.yml/badge.svg)](https://github.com/dromara/dongle/actions)
@@ -8,13 +8,13 @@
 [![Awesome](https://awesome.re/badge-flat2.svg)](https://github.com/avelino/awesome-go?tab=readme-ov-file#security)
 [![License](https://img.shields.io/github/license/dromara/dongle)](https://github.com/dromara/dongle/blob/master/LICENSE)
 
-English | [简体中文](README.cn.md) | [日本語](README.ja.md)
+日本語 | [English](README.md) | [简体中文](README.cn.md)
 
-## Introduction
+## プロジェクト概要
 
-`Dongle` is a simple, semantic and developer-friendly golang crypto package with `100%` unit test coverage，has been included by [awesome-go](https://github.com/avelino/awesome-go?tab=readme-ov-file#security "awesome-go-cn")
+`Dongle` は、軽量で、意味的に分かりやすく、開発者に優しい `golang` エンコーディング＆暗号化ライブラリです。`100%` のユニットテストカバレッジを達成し、[awesome-go](https://github.com/avelino/awesome-go?tab=readme-ov-file#security "awesome-go") に収録されています。
 
-## Repository
+## リポジトリ
 
 [github.com/dromara/dongle](https://github.com/dromara/dongle "github.com/dromara/dongle")
 
@@ -22,43 +22,41 @@ English | [简体中文](README.cn.md) | [日本語](README.ja.md)
 
 [gitcode.com/dromara/dongle](https://gitcode.com/dromara/dongle "gitcode.com/dromara/dongle")
 
-## Quick Start
+## クイックスタート
 
-### Installation
+### インストール
 
 > go version >= 1.23
 
 ```go
-// Via github 
+// github ライブラリを使用
 go get -u github.com/dromara/dongle
 
-// Via gitee
+// gitee ライブラリを使用
 go get -u gitee.com/dromara/dongle
 
-// Via gitcode 
+// gitcode ライブラリを使用
 go get -u gitcode.com/dromara/dongle
 ```
 
-`Dongle` was donated to the [dromara](https://dromara.org/ "dromara") organization, the repository URL has changed. If
-the previous repository used was `golang-module/dongle`, please replace the original repository with the new repository
-in `go.mod`, or execute the following command:
+`Dongle` は [dromara](https://dromara.org/ "dromara") オープンソース組織に寄贈され、リポジトリURLが変更されました。以前のパスが `golang-module/dongle` だった場合は、`go.mod` で元のアドレスを新しいパスに置き換えるか、以下のコマンドを実行してください。
 
 ```go
 go mod edit -replace github.com/golang-module/dongle = github.com/dromara/dongle
 ```
 
-### Example Usage
-Encode&Decode(using `Base64` as an example)
+### 使用例
+エンコード・デコード(`Base64`を例に)
 ```go
 import (
     "github.com/dromara/dongle"
 )
 
-dongle.Encode.FromString("hello world").ByBase64().ToString()      // aGVsbG8gd29ybGQ=
+dongle.Encode.FromString("hello world").ByBase64().ToString() // aGVsbG8gd29ybGQ=
 dongle.Decode.FromString("aGVsbG8gd29ybGQ=").ByBase64().ToString() // hello world
 ```
 
-Hash Algorithm(using `Md5` as an example)
+ハッシュアルゴリズム(`Md5`を例に)
 ```go
 import (
     "github.com/dromara/dongle"
@@ -68,7 +66,7 @@ dongle.Hash.FromString("hello world").ByMd5().ToHexString()    // 5eb63bbbe01eee
 dongle.Hash.FromString("hello world").ByMd5().ToBase64String() // XrY7u+Ae7tCTyyK7j1rNww==
 ```
 
-Hmac Algorithm(using `Md5` as an example)
+HMAC アルゴリズム(`Md5`を例に)
 ```go
 import (
     "github.com/dromara/dongle"
@@ -78,34 +76,34 @@ dongle.Hash.FromString("hello world").WithKey([]byte("dongle")).ByMd5().ToHexStr
 dongle.Hash.FromString("hello world").WithKey([]byte("dongle")).ByMd5().ToBase64String() // R5Biaidfd2lWOG5aPqe3Jg==
 ```
 
-Symmetric Encryption&Decryption(using `AES` as an example)
+対称暗号化・復号化(`AES`を例に)
 ```go
 import (
     "github.com/dromara/dongle"
     "github.com/dromara/dongle/crypto/cipher"
 )
 
-// Create cipher
+// 暗号器を作成
 c := cipher.NewAesCipher(cipher.CBC)
-// Set key (16 bytes)
+// 鍵を設定（16バイト）
 c.SetKey([]byte("dongle1234567890")) 
-// Set initialization vector (16 bytes)
+// 初期化ベクトルを設定（16バイト）
 c.SetIV([]byte("1234567890123456"))
-// Set padding mode (only CBC/ECB block modes need to set padding mode)
+// パディングモードを設定（CBC/ECBブロックモードのみパディングモードの設定が必要）
 c.SetPadding(cipher.PKCS7)
 
-// Encrypt string plaintext, return hex-encoded string ciphertext
+// 文字列平文を暗号化し、16進文字列暗号文を返す
 dongle.Encrypt.FromString("hello world").ByAes(c).ToHexString() // 48c6bc076e1da2946e1c0e59e9c91ae9
-// Encrypt string plaintext, return base64-encoded string ciphertext
+// 文字列平文を暗号化し、base64エンコード文字列暗号文を返す
 dongle.Encrypt.FromString("hello world").ByAes(c).ToBase64String() // SMa8B24dopRuHA5Z6cka6Q==
 
-// Decrypt hex-encoded string ciphertext, return string plaintext
+// 16進文字列暗号文を復号化し、文字列平文を返す
 dongle.Decrypt.FromHexString("48c6bc076e1da2946e1c0e59e9c91ae9").ByAes(c).ToString() // hello world
-// Decrypt base64-encoded string ciphertext, return string plaintext
+// base64エンコード文字列暗号文を復号化し、文字列平文を返す
 dongle.Decrypt.FromBase64String("SMa8B24dopRuHA5Z6cka6Q==").ByAes(c).ToString() // hello world
 ```
 
-Asymmetric Encryption&Decryption(using `RSA` as an example)
+非対称暗号化・復号化(`RSA`を例に)
 ```go
 import (
     "crypto"
@@ -113,29 +111,29 @@ import (
     "github.com/dromara/dongle/crypto/keypair"
 )
 
-// Create key pair
+// 鍵ペアを作成
 kp := keypair.NewRsaKeyPair()
-// Set key format (optional, default is PKCS8)
+// 鍵形式を設定（オプション、デフォルトはPKCS8）
 kp.SetFormat(keypair.PKCS8)
-// Set hash algorithm (optional, default is SHA256, only PKCS8 key format need to set hash algorithm)
+// ハッシュアルゴリズムを設定（オプション、デフォルトはSHA256）
 kp.SetHash(crypto.SHA256)   
 
-// Set public key
+// 公開鍵を設定
 kp.SetPublicKey([]byte("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqzZNa9VrcewyU6wDoV7Y9kAHqX1VK0B3Rb6GNmQe4zLEfce7cVTaLrc4VGTKl35tADG1cRHqtaG4S/WttpiGZBhxJy4MpOXb6eIPiVLsn2lL+rJo5XdbSr3gyjxEOQQ97ihtw4lDd5wMo4bIOuw1LtMezHC1outlM6x+/BB0BSQIDAQAB"))
-// Encrypt string plaintext by public key, return hex-encoded string ciphertext
+// 公開鍵で文字列平文を暗号化し、16進文字列暗号文を返す
 dongle.Encrypt.FromString("hello world").ByRsa(kp).ToHexString() // 7fae94fd1a8b880d8d5454dd8df30c40...
-// Encrypt string plaintext by public key, return base64-encoded string ciphertext
+// 公開鍵で文字列平文を暗号化し、base64エンコード文字列暗号文を返す
 dongle.Encrypt.FromString("hello world").ByRsa(kp).ToBase64String() // f66U/RqLiA2NVFTdjfMMQA==...
 
-// Set private key
+// 秘密鍵を設定
 kp.SetPrivateKey([]byte("MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKrNk1r1Wtx7DJTrAOhXtj2QAepfVUrQHdFvoY2ZB7jMsR9x7txVNoutzhUZMqXfm0AMbVxEeq1obhL9a22mIZkGHEnLgyk5dvp4g+JUuyfaUv6smjld1tKveDKPEQ5BD3uKG3DiUN3nAyjhsg67DUu0x7McLWi62UzrH78EHQFJAgMBAAECgYAeo3nHWzPNURVUsUMcan96U5bEYA2AugxfQVMNf2HvOGidZ2adh3udWrQY/MglERNcTd5gKriG2rDEH0liBecIrNKsBL4lV+qHEGRUcnDDdtUBdGInEU8lve5keDgmX+/huXSRJ+3tYA5u9j+32RquVczvIdtb5XnBLUl61k0osQJBAON5+eJjtw6xpn+pveU92BSHvaJYVyrLHwUjR07aNKb7GlGVM3MGf1FCa8WQUo9uUzYxGLtg5Qf3sqwOrwPd5UsCQQDAOF/zWqGuY3HfV/1wgiXiWp8rc+S8tanMj5M37QQbYW5YLjUmJImoklVahv3qlgLZdEN5ZSueM5jfoSFtNts7AkBKoRDvSiGbi4MBbTHkzLZgfewkH/FxE7S4nctePk553fXTgCyh9ya8BRuQdHnxnpNkOxVPHEnnpEcVFbgrf5gjAkB7KmRI4VTiEfRgINhTJAG0VU7SH/N7+4cufPzfA+7ywG5c8Fa79wOB0SoB1KeUjcSLo5Ssj2fwea1F9dAeU90LAkBJQFofveaDa3YlN4EQZOcCvJKmg7xwWuGxFVTZDVVEws7UCQbEOEEXZrNd9x0IF5kpPLR+rxuaRPgUNaDGIh5o"))
-// Decrypt hex-encoded string ciphertext by private key, return string plaintext
+// 秘密鍵で16進文字列暗号文を復号化し、文字列平文を返す
 dongle.Decrypt.FromHexString("7fae94fd1a8b880d8d5454dd8df30c40...").ByRsa(kp).ToString() // hello world
-// Decrypt base64-encoded string ciphertext by private key, return string plaintext
+// 秘密鍵でbase64エンコード文字列暗号文を復号化し、文字列平文を返す
 dongle.Decrypt.FromBase64String("f66U/RqLiA2NVFTdjfMMQA==...").ByRsa(kp).ToString() // hello world
 ```
 
-Digital Signature&Verification(using `RSA` as an example)
+デジタル署名・検証(`RSA`を例に)
 ```go
 import (
     "crypto"
@@ -143,46 +141,46 @@ import (
     "github.com/dromara/dongle/crypto/keypair"
 )
 
-// Create key pair
+// キーペアを作成
 kp := keypair.NewRsaKeyPair()
-// Set key format (optional, default is PKCS8)
+// キー形式を設定（オプション、デフォルトは PKCS8）
 kp.SetFormat(keypair.PKCS8)
-// Set hash algorithm (optional, default is SHA256, only PKCS8 key format need to set hash algorithm)
+// ハッシュアルゴリズムを設定（オプション、デフォルトはSHA256）
 kp.SetHash(crypto.SHA256)   
 
-// Set private key
+// 秘密鍵を設定
 kp.SetPrivateKey([]byte("MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKrNk1r1Wtx7DJTrAOhXtj2QAepfVUrQHdFvoY2ZB7jMsR9x7txVNoutzhUZMqXfm0AMbVxEeq1obhL9a22mIZkGHEnLgyk5dvp4g+JUuyfaUv6smjld1tKveDKPEQ5BD3uKG3DiUN3nAyjhsg67DUu0x7McLWi62UzrH78EHQFJAgMBAAECgYAeo3nHWzPNURVUsUMcan96U5bEYA2AugxfQVMNf2HvOGidZ2adh3udWrQY/MglERNcTd5gKriG2rDEH0liBecIrNKsBL4lV+qHEGRUcnDDdtUBdGInEU8lve5keDgmX+/huXSRJ+3tYA5u9j+32RquVczvIdtb5XnBLUl61k0osQJBAON5+eJjtw6xpn+pveU92BSHvaJYVyrLHwUjR07aNKb7GlGVM3MGf1FCa8WQUo9uUzYxGLtg5Qf3sqwOrwPd5UsCQQDAOF/zWqGuY3HfV/1wgiXiWp8rc+S8tanMj5M37QQbYW5YLjUmJImoklVahv3qlgLZdEN5ZSueM5jfoSFtNts7AkBKoRDvSiGbi4MBbTHkzLZgfewkH/FxE7S4nctePk553fXTgCyh9ya8BRuQdHnxnpNkOxVPHEnnpEcVFbgrf5gjAkB7KmRI4VTiEfRgINhTJAG0VU7SH/N7+4cufPzfA+7ywG5c8Fa79wOB0SoB1KeUjcSLo5Ssj2fwea1F9dAeU90LAkBJQFofveaDa3YlN4EQZOcCvJKmg7xwWuGxFVTZDVVEws7UCQbEOEEXZrNd9x0IF5kpPLR+rxuaRPgUNaDGIh5o"))
-// Sign string data using private key, return hex-encoded signature
+// 秘密鍵で文字列に署名、hex エンコードバイト配列の署名を返す
 hexBytes := dongle.Sign.FromString("hello world").ByRsa(kp).ToHexBytes() // 7fae94fd1a8b880d8d5454dd8df30c40...
-// Sign string data using private key, return base64-encoded signature
+// 秘密鍵で文字列に署名、base64 エンコードバイト配列の署名を返す
 base64Bytes :=dongle.Sign.FromString("hello world").ByRsa(kp).ToBase64Bytes() // f66U/RqLiA2NVFTdjfMMQA==...
 
-// Set public key
+// 公開鍵を設定
 kp.SetPublicKey([]byte("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqzZNa9VrcewyU6wDoV7Y9kAHqX1VK0B3Rb6GNmQe4zLEfce7cVTaLrc4VGTKl35tADG1cRHqtaG4S/WttpiGZBhxJy4MpOXb6eIPiVLsn2lL+rJo5XdbSr3gyjxEOQQ97ihtw4lDd5wMo4bIOuw1LtMezHC1outlM6x+/BB0BSQIDAQAB"))
-// Verify hex-encoded signature using public key
+// 公開鍵で Hex エンコード署名を検証
 dongle.Verify.FromString("hello world").WithHexSign(hexBytes).ByRsa(kp).ToBool()
-// Verify base64-encoded signature using public key
+// 公開鍵で Base64 エンコード署名を検証
 dongle.Verify.FromString("hello world").WithBase64Sign(base64Bytes).ByRsa(kp).ToBool()
 ```
 
-For more usage examples, please refer to <a href="https://dongle.go-pkg.com" target="_blank">official document</a>.
+より多くの使用例については、<a href="https://dongle.go-pkg.com/ja" target="_blank">公式ドキュメント</a>をご覧ください。
 
-## Contributors
+## コントリビューター
 
-Thanks to all the following who contributed to `dongle`:
+`dongle` に貢献してくださった以下のすべての方々に感謝いたします：
 
 <a href="https://github.com/dromara/dongle/graphs/contributors"><img src="https://contrib.rocks/image?repo=dromara/dongle&max=80&columns=16"/></a>
 
-## Sponsors
+## スポンサー
 
-`Dongle` is a non-commercial open source project. If you want to support `dongle`, you can [buy a cup of coffee](https://dongle.go-pkg.com/sponsor.html) for developer.
+`Dongle` は非営利のオープンソースプロジェクトです。`dongle` をサポートしたい場合は、開発者に[コーヒーを一杯](https://dongle.go-pkg.com/ja/sponsor.html)おごることができます。
 
-## Thanks
+## 謝辞
 
-`Dongle` had been being developed with GoLand under the free JetBrains Open Source license, I would like to express my thanks here.
+`Dongle` は無料の JetBrains オープンソースライセンスの下で GoLand を使用して開発されており、ここで感謝の意を表したいと思います。
 
-<a href="https://www.jetbrains.com" target="_blank"><img src="https://dongle.go-pkg.com/jetbrains.svg?v=2.6.x" height="50" alt="JetBrains"/></a>
+<a href="https://www.jetbrains.com" target="_blank"><img src="https://dongle.go-pkg.com/jetbrains.svg" height="50" alt="JetBrains"/></a>
 
-## License
+## ライセンス
 
-`Dongle` is licensed under the `MIT` License, see the [LICENSE](./LICENSE) file for details.
+`Dongle` は `MIT` ライセンスの下で提供されており、詳細は [LICENSE](./LICENSE) ファイルをご覧ください。
